@@ -6,6 +6,9 @@ basically these scripts are used for running on server, so most codes are one-li
 Packages.arc.util.async.Threads.daemon(() => Reflect.get(Vars.mods.scripts.class, "blacklist").clear()).join();
 UnitTypes.omura.abilities.clear(); 
 Call.sendMessage("server-scripts 스크립트 새로고침 완료");
+Vars.content.blocks().each(b=>b.buildVisibility!=BuildVisibility.hidden&&b.buildVisibility!=BuildVisibility.shown,b=>Vars.state.rules.revealedBlocks.add(b));
+Call.setRules(Vars.state.rules);
+
 findp=s=>Groups.player.find(p=>Strings.stripColors(p.name.toLowerCase())==s.toLowerCase())||Groups.player.index(s);sharp=findp("Sharlotte");
 
 setFloor=(o,e)=>{e.isOverlay()?o.setFloorNet(o.floor(),e):e.isFloor()&&o.setFloorNet(e)};
@@ -24,3 +27,15 @@ updaterule=()=>{Call.sendMessage("[#ffd37f]game rules are updated!");Call.setRul
 
 syncp=p=>{Call.worldDataBegin(p.con);Vars.netServer.sendWorldData(p)};
 syncall=()=>{Call.sendMessage("[#7457ce]World reloaded");Groups.player.each(p=>syncp(p))};
+
+updaterunner=()=>{
+    Vars.content.units().each(type=>{
+        Team.baseTeams.map(t=>{
+            if(Groups.unit.count(u=>u.type==type&&u.team==t)>Vars.state.rules.unitCap){
+                Call.sendMessage(u.localizedName+"가 너무 많습니다!");
+                Groups.unit.find(u=>u.type==type&&u.team==t).kill();
+            };
+        });
+    });
+};
+Events.run(Trigger.update, ()=>updaterunner());
