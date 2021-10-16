@@ -1,3 +1,5 @@
+Call.sendMessage("commands 스크립트 새로고침 완료");
+
 cmdvalid =p=> p.admin||Vars.state.rules.mode()==Gamemode.sandbox||p.sendMessage("[red]이 명령어는 샌드박스 전용입니다!");
 cmds = Vars.netServer.clientCommands;cl = Vars.netServer.clientCommands.getCommandList();
 initcmds=()=>{seq = new Seq();cl.each(c=>seq.find(cc=>cc.text==c.text)==null&&seq.add(c));cl.clear();cl.addAll(seq)};

@@ -1,3 +1,5 @@
+Call.sendMessage("fxs 스크립트 새로고침 완료");
+
 /*define color getter*/
 fxcol=()=>Color.red.shiftHue(60%Time.delta);
 fxcol=()=>Pal.lancerLaser.cpy().lerp(Pal.sap,60%Time.delta).lerp(Pal.place,60%Time.delta);

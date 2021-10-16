@@ -4,6 +4,8 @@ basically these scripts are used for running on server, so most codes are one-li
 */
 
 Packages.arc.util.async.Threads.daemon(() => Reflect.get(Vars.mods.scripts.class, "blacklist").clear()).join();
+UnitTypes.omura.abilities.clear(); 
+Call.sendMessage("server-scripts 스크립트 새로고침 완료");
 findp=s=>Groups.player.find(p=>Strings.stripColors(p.name.toLowerCase())==s.toLowerCase())||Groups.player.index(s);sharp=findp("Sharlotte");
 
 setFloor=(o,e)=>{e.isOverlay()?o.setFloorNet(o.floor(),e):e.isFloor()&&o.setFloorNet(e)};
