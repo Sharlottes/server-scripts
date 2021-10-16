@@ -15,7 +15,7 @@ findu=a=>{str="";Vars.content.units().copy().filter(u=>u.name.includes(a[0])).ea
 getu=(a,p)=>Vars.content.units().find(u=>tolc(u.name)==tolc(a[0]))||p.sendMessage("[orange]"+a[0]+"[red]을(를) 찾을 수 없습니다![][]\n추천 단어들 "+findu(a));
 gett=(a,p,i)=>{try{return Team[a[i]||'sharded']}catch(e){p.sendMessage("[orange]"+a[i]+"[red]을(를) 찾을 수 없습니다!");return Team['sharded']}};
 spawn=(a,p,u,t,i)=>{Time.run(i, ()=>u.spawn(t,(a[3]||p.x||8),(a[4]||p.y||8)))};
-amountck=(u,t,p,i)=>Groups.unit.count(g=>g.team==t&&g.type==u)+i<=Vars.state.rules.unitCap||p.sendMessage(i+"개 소환됨.\n[red]유닛이 너무 많습니다![]\n현재 제한 수: [orange]"+Vars.state.rules.unitCap);
+amountck=(u,t,p,i)=>Groups.unit.count(g=>g.team==t&&g.type==u)<=Vars.state.rules.unitCap||p.sendMessage(i+"개 소환됨.\n[red]유닛이 너무 많습니다![]\n현재 제한 수: [orange]"+Vars.state.rules.unitCap);
 spawnrunner=(a,p)=>{if(!cmdvalid(p))return;u=getu(a,p);t=gett(a,p,2);if(u!=null&&u!=UnitTypes.block){for(i=0;i<(a[1]||1);i++){if(amountck(u,t,p,i)){spawn(a,p,u,t,i)}else{break}}}};
 spawnadapter = new JavaAdapter(CommandHandler.CommandRunner,{accept(a,p){spawnrunner(a, p)}});
 cmds.register("spawn","<unit> [amount] [team] [worldx] [worldy]","spawn units",spawnadapter);
