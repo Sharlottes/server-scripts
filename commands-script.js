@@ -15,9 +15,8 @@ function initcmds() {
 };
 
 cmds.register("chat", "<strings...>", "send message", new JavaAdapter(CommandHandler.CommandRunner, {
-  accept: function(args, parameter) {
+  accept: function(args, player) {
     const str = args.join(" ");
-    const player = parameter;
     Call.sendMessage(player.name+" [orange]>[] "+str);
   }
 }));
@@ -25,10 +24,9 @@ cmds.register("chat", "<strings...>", "send message", new JavaAdapter(CommandHan
 
 
 cmds.register("w", "<player> <strings...>", "send message to special player", new JavaAdapter(CommandHandler.CommandRunner, {
-  accept: function(args, parameter) {
+  accept: function(args, player) {
     const message = args.slice(1).join(" ");
     const target = findp(args[0]);
-    const player = parameter;
     if(target) {
       target.sendMessage("[orange][[[]"+player.name+" [orange]->[] "+target.name+"[orange]][] "+message);
       player.sendMessage("[orange][[[]"+player.name+" [orange]->[] "+target.name+"[orange]][] "+message);
@@ -38,20 +36,17 @@ cmds.register("w", "<player> <strings...>", "send message to special player", ne
 }));
 
 cmds.register("spawn", "<unit> [amount] [team] [worldx] [worldy]", "spawn units", new JavaAdapter(CommandHandler.CommandRunner, {
-  accept: function(args, parameter) {
-    const player = parameter;
+  accept: function(args, player) {
     if(!cmdvalid(player)) return;
 
-    const [ unitName, amount, teamName, x, y ] = args;
+    let [ unitName, amount, teamName, x, y ] = args;
     const spawnUnit = Vars.content.units().find(unit=>unit.name.toLowerCase()==unitName.toLowerCase());
-    const team = (()=>{
-      try{
-        return Team[teamName||'sharded'];
-      }catch(e){
-        p.sendMessage("[orange]"+a[i]+"[red]을(를) 찾을 수 없습니다!");
-        return Team['sharded'];
-      }
-    })();
+    const team = Team[teamName];
+    
+    if(!amount) amount = 1;
+    if(!team) team = Team.sharded;
+    if(!x) x = player.x;
+    if(!y) y = player.y;
 
     if(!spawnUnit) {
       return player.sendMessage("[orange]"+a[0]+"[red]을(를) 찾을 수 없습니다![][]\n추천 단어들 "+Vars.content.units().map(unit=>{
@@ -62,7 +57,7 @@ cmds.register("spawn", "<unit> [amount] [team] [worldx] [worldy]", "spawn units"
       return player.sendMessage("[red]금지된 유닛입니다.");
 
     for(var i = 0; i < amount; i++){
-      if(Groups.unit.count(unit=>unit.team==team&&unit.type==spawnUnit)+i <= Vars.state.rules.unitCap) Time.run(i, ()=>spawnUnit.spawn(team, (x||player.x||8),(y||player.y||8)));
+      if(Groups.unit.count(unit=>unit.team==team&&unit.type==spawnUnit)+i <= Vars.state.rules.unitCap) Time.run(i, ()=>spawnUnit.spawn(team, x, y));
       else return player.sendMessage(i+"개 소환됨.\n[red]유닛이 너무 많습니다![]\n현재 제한 수: [orange]"+Vars.state.rules.unitCap);
     }
   }
