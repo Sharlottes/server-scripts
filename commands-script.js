@@ -40,8 +40,8 @@ cmds.register("spawn", "<unit> [amount] [team] [worldx] [worldy]", "spawn units"
     if(!cmdvalid(player)) return;
 
     let [ unitName, amount, teamName, x, y ] = args;
-    const spawnUnit = Vars.content.units().find(unit=>unit.name.toLowerCase()==unitName.toLowerCase());
-    const team = Team[teamName];
+    let spawnUnit = Vars.content.units().find(unit=>unit.name.toLowerCase()==unitName.toLowerCase());
+    let team = Team.baseTeams.find(team=>team==teamName);
     
     if(!amount) amount = 1;
     if(!team) team = Team.sharded;
@@ -51,7 +51,7 @@ cmds.register("spawn", "<unit> [amount] [team] [worldx] [worldy]", "spawn units"
     if(!spawnUnit) {
       return player.sendMessage("[orange]"+a[0]+"[red]을(를) 찾을 수 없습니다![][]\n추천 단어들 "+Vars.content.units().map(unit=>{
         return unit.name.includes(unitName)?"[lightgray]"+unit.name.replace(unitName, "[orange]"+unitName+"[]")+"[] ":"";
-      }).toString());
+      }).filter(e=>e).toString());
     }
     else if(spawnUnit==UnitTypes.block) 
       return player.sendMessage("[red]금지된 유닛입니다.");
