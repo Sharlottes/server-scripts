@@ -1,5 +1,5 @@
-cmds = Vars.netServer.clientCommands;
-cl = Vars.netServer.clientCommands.getCommandList();
+if(!cmd) cmds = Vars.netServer.clientCommands;
+if(!cl) cl = Vars.netServer.clientCommands.getCommandList();
 
 function cmdvalid(player) {
   return player.admin||Vars.state.rules.mode()==Gamemode.sandbox||player.sendMessage("[red]이 명령어는 샌드박스 전용입니다!");
