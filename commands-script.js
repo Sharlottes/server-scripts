@@ -50,7 +50,7 @@ cmds.register("spawn", "<unit> [amount] [team] [worldx] [worldy]", "spawn units"
 
     if(!spawnUnit) {
       return player.sendMessage("[orange]"+a[0]+"[red]을(를) 찾을 수 없습니다![][]\n추천 단어들 "+Vars.content.units().map(unit=>{
-        return unit.name.includes(unitName)?"[lightgray]"+unit.name.replace(unitName, "[orange]"+unitName+"[]")+"[] ":"";
+        if(unit.name.includes(unitName)) return "[lightgray]"+unit.name.replace(unitName, "[orange]"+unitName+"[]")+"[] ";
       }).filter(e=>e).toString());
     }
     else if(spawnUnit==UnitTypes.block) 
