@@ -79,3 +79,5 @@ syncall = () => {
   Call.sendMessage("[#7457ce]World reloaded");
   Groups.player.each((p) => syncp(p));
 };
+
+/js Groups.all.each(e=>if(e instaceof Healthc && Mathf.dst(e.getX(), e.getY(), sharp.x, sharp.y)) Call.sendMessage(
