@@ -1,12 +1,12 @@
 /* custom formation script */
 var angle = 360;
-
+var units = new Seq();
 var initformat=(amount, type, player, speed, spacing, commandAll)=>{
   amount = Math.min(amount, Vars.state.rules.unitCap);
   
-  const units = Groups.unit.copy(new Seq()).filter(u=>commandAll || u.type==type);
+  var units = Groups.unit.copy(new Seq()).filter(u=>commandAll || u.type==type);
 
-  if(!commandAll && units <= amount){
+  if(!commandAll && units.size <= amount){
     for(var i = 0; i < amount-Groups.unit.count(u=>u.type==type); i++) 
       type.spawn(player.team(), player.x, player.y);
   }
