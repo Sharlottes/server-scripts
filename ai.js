@@ -1,7 +1,7 @@
 /* custom formation script */
 var angle = 360;
 var units = new Seq();
-var initformat=(i, amount, type, player, speed, spacing, commandAll)=>{
+var initformat=(equ, amount, type, player, speed, spacing, commandAll)=>{
   amount = Math.min(amount, Vars.state.rules.unitCap);
   
   var units = Groups.unit.copy(new Seq()).filter(u=>commandAll || u.type==type);
@@ -15,7 +15,7 @@ var initformat=(i, amount, type, player, speed, spacing, commandAll)=>{
     calculateSlotLocation(out, slot){
       angle+=speed;
       var radian = angle / 360 * slot/this.slots * Mathf.degRad;
-      equs[i](out, radian);
+      equ(out, radian);
       return out;
     }
   })), units);
@@ -116,4 +116,4 @@ var twopi=(out, radian)=>{
 var equs=[nabi, starBeta, heart, flower, curvStar, sinStar, multiStar, flowmulti, twopi];
 
 
-initformat(3, 500, UnitTypes.flare, sharp,0.3,80,false);
+initformat(equs[3], 500, UnitTypes.flare, sharp,0.3,80,false);
