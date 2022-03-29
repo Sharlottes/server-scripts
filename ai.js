@@ -4,13 +4,13 @@ UnitTypes.flare.speed=50;
 sharp=Vars.player;
 /*
 when it doesn't work, use this
+*/
 amount=500;
 type=UnitTypes.flare;
 player=sharp;
 speed=0.3;
 spacing=80;
 commandAll=false;
-*/
 var angle = 360;
 var units = new Seq();
 var initformat=(equ, amount, type, player, speed, spacing, commandAll)=>{
