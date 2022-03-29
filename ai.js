@@ -1,10 +1,22 @@
-/* custom formation script */
+
+Vars.state.rules.unitCap=500;
+UnitTypes.flare.speed=50;
+sharp=Vars.player;
+/*
+when it doesn't work, use this
+amount=500;
+type=UnitTypes.flare;
+player=sharp;
+speed=0.3;
+spacing=80;
+commandAll=false;
+*/
 var angle = 360;
 var units = new Seq();
 var initformat=(equ, amount, type, player, speed, spacing, commandAll)=>{
   amount = Math.min(amount, Vars.state.rules.unitCap);
   
-  var units = Groups.unit.copy(new Seq()).filter(u=>commandAll || u.type==type);
+  units = Groups.unit.copy(new Seq()).filter(u=>commandAll || u.type==type);
 
   if(!commandAll && units.size <= amount){
     for(var i = 0; i < amount-Groups.unit.count(u=>u.type==type); i++) 
