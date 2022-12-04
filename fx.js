@@ -19,4 +19,4 @@ fxB=()=>runner=()=>Call.effect(Fx.lancerLaserShoot,sharp.x,sharp.y,sharp.unit().
 fxC=()=>runner=()=>fxs.each(fx=>fxPack.each(f=>f(sharp,fx)));
 fxD=()=>runner=()=>Groups.player.each(cons(p=>Call.effect(Fx.mine,p.x,p.y,p.unit().rotation,fxcol())));
 /*run this only **once**, you don't need to run this again when redefining runner*/
-startedfx=false;startfx=()=>{startedfx=true;startedfx||Events.run(Trigger.update, ()=>runner())}
+startfx=()=>Events.run(Trigger.update,()=>runner())

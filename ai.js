@@ -1,4 +1,3 @@
-
 Vars.state.rules.unitCap=500;
 UnitTypes.flare.speed=50;
 sharp=Vars.player;
